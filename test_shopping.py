@@ -21,7 +21,7 @@ class TestBuyerReviewInit(unittest.TestCase):
 
     def test_Rating(self):
         with self.assertRaises(Exception):
-            review = shopping.BuyerReview('abc', '', '')
+            review = shopping.BuyerReview('abc.  ', '', '')
         with self.assertRaises(Exception):
             review = shopping.BuyerReview(-1, '', '')
         with self.assertRaises(Exception):
@@ -38,7 +38,17 @@ class TestBuyerReviewInit(unittest.TestCase):
         with self.assertRaises(Exception):
             review = shopping.BuyerReview('', '1 0', '')
         with self.assertRaises(Exception):
-            review = shopping.BuyerReview('', 1.5, '')         
+            review = shopping.BuyerReview('', 1.5, '')
+
+    def test_UserId(self):
+        with self.assertRaises(Exception):
+            review = shopping.BuyerReview('', '', 'this way')       
+        with self.assertRaises(Exception):
+            review = shopping.BuyerReview('', '', '..theis._/')     
+        with self.assertRaises(Exception):
+            review = shopping.BuyerReview('', '', 1)     
+        with self.assertRaises(Exception):
+            review = shopping.BuyerReview('', '', -45)       
 
             
 

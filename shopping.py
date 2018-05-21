@@ -11,12 +11,12 @@ class BuyerReview():
         if rating < 1 or rating > 5:
             raise Exception('Rating must be int(1-5)')
         self.rating = rating
-        # If not a str
-        if type(review) is not str or review == ' ':
+        # Alphanumeric and spaces only
+        if not re.fullmatch('[\w ]*', review):
             raise Exception('Review must be a string')
         self.review = review
-        # If not a str
-        if type(userId) is not str  or userId == ' ':
+        # Alphanumeric only
+        if not re.fullmatch('[\w]*', userId):
             raise Exception('userId must be a string')
         self.userId = userId
 
