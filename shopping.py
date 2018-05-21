@@ -1,26 +1,26 @@
 # !/usr/bin/env python
 import sys
+import re
 
 
 class BuyerReview():
-    # Class Vars
-    # rating = None # An integer for # of starts (valued values are 1-5)
-    # review = None # A string with the review describing the buyer's experience.
-    # userId = None # User ID of user that is reviewing the item
+
     # Initializer/Constructor
     def __init__(self, rating, review, userId):
-        if type(rating) is not int:
-            raise Exception("Int Required")
+        # If not a int from 1-5
         if rating < 1 or rating > 5:
-            raise Exception("Invalid rating!")
+            raise Exception('Rating must be int(1-5)')
         self.rating = rating
-
+        # If not a str
         if type(review) is not str:
-            raise Exception("String only Review")
+            raise Exception('Review must be a string')
         self.review = review
+        # If not a str
+        if type(userId) is not str:
+            raise Exception('userId must be a string')
+        self.userId = userId
 
         
-        self.userId = userId
     # Accessors for Instance Vars
     def getRating(self):
         return self.rating
