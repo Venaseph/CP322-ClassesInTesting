@@ -1,9 +1,9 @@
 # !/usr/bin/env python
 import sys
-import unittest
-import shopping
+import unittest # Lib for Python UT
+import shopping # Make sure to import .py you're testing on 
 
-#subclasses of test case call methods of that function for t4esting
+#subclasses of test case call methods of that function for testing
 class TestBuyerReviewInit(unittest.TestCase):
     # Test initializon
     def test_BuyerReviewInit(self):
@@ -34,7 +34,7 @@ class TestBuyerReviewInit(unittest.TestCase):
         with self.assertRaises(Exception):
             review = shopping.BuyerReview('', 99, '')
         with self.assertRaises(Exception):
-            review = shopping.BuyerReview('', 'a', '')
+            review = shopping.BuyerReview('', ' ', '')
         with self.assertRaises(Exception):
             review = shopping.BuyerReview('', '1 0', '')
         with self.assertRaises(Exception):

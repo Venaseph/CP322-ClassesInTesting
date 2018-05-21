@@ -12,15 +12,15 @@ class BuyerReview():
             raise Exception('Rating must be int(1-5)')
         self.rating = rating
         # If not a str
-        if type(review) is not str:
+        if type(review) is not str or review == ' ':
             raise Exception('Review must be a string')
         self.review = review
         # If not a str
-        if type(userId) is not str:
+        if type(userId) is not str  or userId == ' ':
             raise Exception('userId must be a string')
         self.userId = userId
 
-        
+
     # Accessors for Instance Vars
     def getRating(self):
         return self.rating
