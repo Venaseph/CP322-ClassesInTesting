@@ -11,15 +11,14 @@ class BuyerReview():
         if rating < 1 or rating > 5:
             raise Exception('Rating must be int(1-5)')
         self.rating = rating
-        # Alphanumeric and spaces only
-        if not re.fullmatch('[\w ]*', review):
-            raise Exception('Review must be a string')
-        self.review = review
-        # Alphanumeric only
-        if not re.fullmatch('[\w]*', userId):
-            raise Exception('userId must be a string')
-        self.userId = userId
 
+        if not re.fullmatch('[\w .?!\-]+', review):
+            raise Exception('Review must be alphanum, spaces or punctuation')
+        self.review = review
+
+        if not re.fullmatch('[\w]+', userId):
+            raise Exception('userId (Alphanumeric and Underscores')
+        self.userId = userId
 
     # Accessors for Instance Vars
     def getRating(self):
@@ -40,58 +39,51 @@ class BuyerReview():
         # returns:  string that is the user Id
 
 
+class ShoppingItem():
+    # Initializer/Constructor
+    def __init__(self, price,sold, reviews, tags, buyers):
+        self.price = price 
+        self.sold = sold 
+        self.reviews = reviews 
+        self.tags = tags
+        self.buyers = buyers
 
+    # Accessors for Class Vars
+    def getPrice(self):
+        return self.price
+        # getPrice:  get the current price of the item
+        # arguments:  none
+        # returns:  price of the item (float value)
 
-# class ShoppingItem():
-#     # Class Variables
-#     price = None # price of the item (float value)
-#     sold = None # number of items sold
-#     reviews = None # # list of BuyerReview objects, which are reviews for this item
-#     tags = None # list of keywords that are used to find this object when searching
-#     buyers = None # list of user ID's of buyers that have purchased this item
-#     # Initializer/Constructor
-#     def __init__(self, price,sold, reviews, tags, buyers):
-#         self.price = price 
-#         self.sold = sold 
-#         self.reviews = reviews 
-#         self.tags = tags
-#         self.buyers = buyers
-#     # Accessors for Class Vars
-#     def getPrice(self):
-#         return self.price
-#         # getPrice:  get the current price of the item
-#         # arguments:  none
-#         # returns:  price of the item (float value)
+    def getNumberSold(self):
+        return self.sold
+        # getNumberSold:  get number of this item sold
+        # arguments:  none
+        # returns:  integer number sold
 
-#     def getNumberSold(self):
-#         return self.sold
-#         # getNumberSold:  get number of this item sold
-#         # arguments:  none
-#         # returns:  integer number sold
+    def getAverageRating(self):
+        return 0
+        # getAverageRating:  get the average star rating of this item
+        # arguments:  none
+        # returns:  average star rating (float value)
 
-#     def getAverageRating(self):
-#         pass
-#         # getAverageRating:  get the average star rating of this item
-#         # arguments:  none
-#         # returns:  average star rating (float value)
+    def getReviews(self):
+        return self.reviews
+        # get list of reviews for this product
+        # arguments:  none
+        # returns:  a list of BuyerReview objects
 
-#     def getReviews(self):
-#         return self.reviews
-#         # get list of reviews for this product
-#         # arguments:  none
-#         # returns:  a list of BuyerReview objects
+    def getTags(self):
+        return self.tags
+        # get list of all tags that can be used to find this item in a search
+        # arguments:  none
+        # returns:  list of strings that are tags
 
-#     def getTags(self):
-#         return self.tags
-#         # get list of all tags that can be used to find this item in a search
-#         # arguments:  none
-#         # returns:  list of strings that are tags
-
-#     def getBuyers(self):
-#         return self.buyers
-#         # get list of buyers that have purchased this item
-#         # arguments:  none
-#         # returns:  list of user ID's of buyers that purchased this item
+    def getBuyers(self):
+        return self.buyers
+        # get list of buyers that have purchased this item
+        # arguments:  none
+        # returns:  list of user ID's of buyers that purchased this item
 
 #     def addPurchase(self):
 #         pass

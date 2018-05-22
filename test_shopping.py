@@ -7,18 +7,18 @@ import shopping # Make sure to import .py you're testing on
 class TestBuyerReviewInit(unittest.TestCase):
     # Test initializon
     def test_BuyerReviewInit(self):
-        review = shopping.BuyerReview(1, 'This sucks', 'chris')
-        #assertEqual checks two values, if not flags it as failing
-        self.assertEqual(review.getRating(), 1)
-        self.assertEqual(review.getReview(), "This sucks")
+        review = shopping.BuyerReview(1, 'This sucks-?', 'chris')
+        #assertEqual checks two values, if not flags it as failing. Get Testing
+        self.assertEqual(review.getRating(), 1) 
+        self.assertEqual(review.getReview(), "This sucks-?")
         self.assertEqual(review.getUserid(), 'chris')
 
-        review2 = shopping.BuyerReview(4, 'This is Great', "brent")
+        review2 = shopping.BuyerReview(4, 'This is Great.', 'brent_test')
         self.assertEqual(review2.getRating(), 4)
-        self.assertEqual(review2.getReview(), "This is Great")
-        self.assertEqual(review2.getUserid(), "brent")
+        self.assertEqual(review2.getReview(), 'This is Great.')
+        self.assertEqual(review2.getUserid(), 'brent_test')
 
-
+    # Test Raiting
     def test_Rating(self):
         with self.assertRaises(Exception):
             review = shopping.BuyerReview('abc.  ', '', '')
@@ -44,13 +44,24 @@ class TestBuyerReviewInit(unittest.TestCase):
         with self.assertRaises(Exception):
             review = shopping.BuyerReview('', '', 'this way')       
         with self.assertRaises(Exception):
-            review = shopping.BuyerReview('', '', '..theis._/')     
+            review = shopping.BuyerReview('', '', 'brent_ test')     
         with self.assertRaises(Exception):
             review = shopping.BuyerReview('', '', 1)     
         with self.assertRaises(Exception):
             review = shopping.BuyerReview('', '', -45)       
 
             
+class TestShoppingItemInit(unittest.TestCase):
+    # Test initializon
+    def test_ShoppingItemInit(self):
+        shoppingItem = shopping.ShoppingItem(5.99, 1, ['review1', 'review2'], ['games', 'fun'], ['john', 'mike', 'ashley'])
+        #assertEqual checks two values, if not flags it as failing. Get Testing.
+        self.assertEqual(shoppingItem.getPrice(), 5.99)
+        self.assertEqual(shoppingItem.getNumberSold(), 1)
+        self.assertEqual(shoppingItem.getAverageRating(), 0)
+        self.assertEqual(shoppingItem.getReviews(), ['review1', 'review2'])
+        self.assertEqual(shoppingItem.getTags(), ['games', 'fun'])
+        self.assertEqual(shoppingItem.getBuyers(), ['john', 'mike', 'ashley'])    
 
 
 unittest.main()
