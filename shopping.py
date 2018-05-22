@@ -9,39 +9,35 @@ class BuyerReview():
     def __init__(self, rating, review, userId):
         # If not a int from 1-5
         if rating < 1 or rating > 5:
-            raise Exception('Rating must be int(1-5)')
+            raise Exception('Rating must be an int(1-5)')
         self.rating = rating
 
         if not re.fullmatch('[\w .?!\-]+', review):
-            raise Exception('Review must be alphanum, spaces or punctuation')
+            raise Exception('Review can be alphanumeric, spaces or punctuation')
         self.review = review
 
         if not re.fullmatch('[\w]+', userId):
-            raise Exception('userId (Alphanumeric and Underscores')
+            raise Exception('userId (userId can be alphanumeric and underscores')
         self.userId = userId
+
 
     # Accessors for Instance Vars
     def getRating(self):
         return self.rating
-        # get the rating in # of stars provided as part of this review
-        # args  = None return 1-5
 
     def getReview(self):
         return self.review
-        # getReview:  get text describing buyer's experience
-        # arguments:  none
-        # returns:  string that describes buyer's experience
 
     def getUserid(self):
         return self.userId
-        # getUserId:  get the userId of the user that made this review
-        # arguments:  none
-        # returns:  string that is the user Id
 
 
 class ShoppingItem():
     # Initializer/Constructor
-    def __init__(self, price,sold, reviews, tags, buyers):
+    def __init__(self, price, sold, reviews, tags, buyers):
+        # Number: Currency amount (cents optional) Optional thousands separators; optional two-digit fraction
+        if not re.match('^((0-9)*[.]([0-9][0-9])+$', price):
+            raise Exception('Price match a valid USD currency')
         self.price = price 
         self.sold = sold 
         self.reviews = reviews 

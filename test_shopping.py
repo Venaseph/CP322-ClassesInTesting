@@ -5,7 +5,7 @@ import shopping # Make sure to import .py you're testing on
 
 #subclasses of test case call methods of that function for testing
 class TestBuyerReviewInit(unittest.TestCase):
-    # Test initializon
+    # Test initializon and positive result testing
     def test_BuyerReviewInit(self):
         review = shopping.BuyerReview(1, 'This sucks-?', 'chris')
         #assertEqual checks two values, if not flags it as failing. Get Testing
@@ -18,7 +18,7 @@ class TestBuyerReviewInit(unittest.TestCase):
         self.assertEqual(review2.getReview(), 'This is Great.')
         self.assertEqual(review2.getUserid(), 'brent_test')
 
-    # Test Raiting
+    # Test Rating
     def test_Rating(self):
         with self.assertRaises(Exception):
             review = shopping.BuyerReview('abc.  ', '', '')
@@ -52,7 +52,7 @@ class TestBuyerReviewInit(unittest.TestCase):
 
             
 class TestShoppingItemInit(unittest.TestCase):
-    # Test initializon
+    # Test initializon and positive result testing
     def test_ShoppingItemInit(self):
         shoppingItem = shopping.ShoppingItem(5.99, 1, ['review1', 'review2'], ['games', 'fun'], ['john', 'mike', 'ashley'])
         #assertEqual checks two values, if not flags it as failing. Get Testing.
@@ -62,6 +62,15 @@ class TestShoppingItemInit(unittest.TestCase):
         self.assertEqual(shoppingItem.getReviews(), ['review1', 'review2'])
         self.assertEqual(shoppingItem.getTags(), ['games', 'fun'])
         self.assertEqual(shoppingItem.getBuyers(), ['john', 'mike', 'ashley'])    
+
+        shoppingItem2 = shopping.ShoppingItem(7.00, 5, ['review1', 'review2', 'review3'], ['tag1', 'tag2', 'tag3'], ['tyler', 'brent', 'Tony'])
+        self.assertEqual(shoppingItem2.getPrice(), 7.00)
+        self.assertEqual(shoppingItem2.getNumberSold(), 5)
+        self.assertEqual(shoppingItem2.getAverageRating(), 0)
+        self.assertEqual(shoppingItem2.getReviews(), ['review1', 'review2', 'review3'])
+        self.assertEqual(shoppingItem2.getTags(), ['tag1', 'tag2', 'tag3'])
+        self.assertEqual(shoppingItem2.getBuyers(), ['tyler', 'brent', 'Tony']) 
+
 
 
 unittest.main()
