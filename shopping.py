@@ -36,11 +36,11 @@ class ShoppingItem():
     # Initializer/Constructor
     def __init__(self, price, sold, reviews, tags, buyers):
         # Number: Currency amount (cents optional) Optional thousands separators; optional two-digit fraction
-        if not re.match('^((0-9)*[.]([0-9][0-9])+$', price):
+        if not re.fullmatch('^[+-]?[\d]{1,3}(?:,?[\d]{3})*(?:.[\d]{2})?$', str(price)):
             raise Exception('Price match a valid USD currency')
-        self.price = price 
-        self.sold = sold 
-        self.reviews = reviews 
+        self.price = price
+        self.sold = sold
+        self.reviews = reviews
         self.tags = tags
         self.buyers = buyers
 
