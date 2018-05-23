@@ -88,4 +88,5 @@ class TestShoppingItemInit(unittest.TestCase):
         with self.assertRaises(Exception):
             shoppingItem = shopping.ShoppingItem(5.00, 1.5, [], [], [])
 
+
 unittest.main()

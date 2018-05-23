@@ -43,7 +43,7 @@ class ShoppingItem():
         if not re.fullmatch('^[0-9]*$', str(sold)):
             raise Exception('Must be a positive integer')
         self.sold = sold
-        # 
+        # Allow 
         self.reviews = reviews
         self.tags = tags
         self.buyers = buyers
