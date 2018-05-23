@@ -12,11 +12,11 @@ class BuyerReview():
             raise Exception('Rating must be an int(1-5)')
         self.rating = rating
         # If not a normal sentance with punct/dash
-        if not re.fullmatch('[\w .?!\-]+', review):
+        if not re.fullmatch(r'[\w .?!\-]+', review):
             raise Exception('Review can be alphanumeric, spaces or punctuation')
         self.review = review
         #If not a alpanumeric with underscores
-        if not re.fullmatch('[\w]+', userId):
+        if not re.fullmatch(r'[\w]+', userId):
             raise Exception('userId (userId can be alphanumeric and underscores')
         self.userId = userId
 
@@ -34,9 +34,13 @@ class BuyerReview():
 
 class ShoppingItem():
     # Initializer/Constructor
-    def __init__(self, price, sold, reviews, tags, buyers):
+    def __init__(self, name, price, sold, reviews, tags, buyers):
+        # Regex for name formatting
+        if not re.fullmatch('^[a-zA-Z ]+$', name):
+            raise Exception('Name Formatting')
+        self.name = name
         # Number: Currency amount (cents optional) Optional thousands separators; optional two-digit fraction
-        if not re.fullmatch('^[+]?[\d]{1,3}(?:,?[\d]{3})*(?:.[\d]{2})?$', str('%.2f' % price)):
+        if not re.fullmatch(r'^[+]?[\d]{1,3}(?:,?[\d]{3})*(?:.[\d]{2})?$', str('%.2f' % price)):
             raise Exception('Price match a valid USD currency')
         self.price = price
         # int on 0 or higher
@@ -49,6 +53,9 @@ class ShoppingItem():
         self.buyers = buyers
 
     # Accessors for Class Vars
+    def getName(self):
+        return self.name
+
     def getPrice(self):
         return self.price
         # getPrice:  get the current price of the item
@@ -62,7 +69,11 @@ class ShoppingItem():
         # returns:  integer number sold
 
     def getAverageRating(self):
-        return 0
+        tally = 0         
+        for review in self.reviews:
+            tally += review.getRating()
+        return tally / len(self.reviews)
+
         # getAverageRating:  get the average star rating of this item
         # arguments:  none
         # returns:  average star rating (float value)
