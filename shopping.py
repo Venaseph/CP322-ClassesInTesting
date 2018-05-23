@@ -1,6 +1,7 @@
 # !/usr/bin/env python
 import sys
 import re
+import decimal
 
 
 class BuyerReview():
@@ -36,10 +37,14 @@ class ShoppingItem():
     # Initializer/Constructor
     def __init__(self, price, sold, reviews, tags, buyers):
         # Number: Currency amount (cents optional) Optional thousands separators; optional two-digit fraction
-        if not re.fullmatch('^[+-]?[\d]{1,3}(?:,?[\d]{3})*(?:.[\d]{2})?$', str(price)):
+        if not re.fullmatch('^[+]?[0-9]{1,3}(?:,?[0-9]{3})*(?:.[0-9]{2})?$', str('%.2f' % price)):
             raise Exception('Price match a valid USD currency')
         self.price = price
+        # int on 0 or higher
+        if not re.fullmatch('^[0-9]*$', str(sold)):
+            raise Exception('Must be a positive integer')
         self.sold = sold
+        # 
         self.reviews = reviews
         self.tags = tags
         self.buyers = buyers
