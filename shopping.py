@@ -5,18 +5,17 @@ import decimal
 
 
 class BuyerReview():
-
     # Initializer/Constructor
     def __init__(self, rating, review, userId):
         # If not a int from 1-5
         if rating < 1 or rating > 5:
             raise Exception('Rating must be an int(1-5)')
         self.rating = rating
-
+        # If not a normal sentance with punct/dash
         if not re.fullmatch('[\w .?!\-]+', review):
             raise Exception('Review can be alphanumeric, spaces or punctuation')
         self.review = review
-
+        #If not a alpanumeric with underscores
         if not re.fullmatch('[\w]+', userId):
             raise Exception('userId (userId can be alphanumeric and underscores')
         self.userId = userId
@@ -37,7 +36,7 @@ class ShoppingItem():
     # Initializer/Constructor
     def __init__(self, price, sold, reviews, tags, buyers):
         # Number: Currency amount (cents optional) Optional thousands separators; optional two-digit fraction
-        if not re.fullmatch('^[+]?[0-9]{1,3}(?:,?[0-9]{3})*(?:.[0-9]{2})?$', str('%.2f' % price)):
+        if not re.fullmatch('^[+]?[\d]{1,3}(?:,?[\d]{3})*(?:.[\d]{2})?$', str('%.2f' % price)):
             raise Exception('Price match a valid USD currency')
         self.price = price
         # int on 0 or higher
