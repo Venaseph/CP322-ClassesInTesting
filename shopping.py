@@ -98,6 +98,7 @@ class ShoppingItem():
         # returns:  list of user ID's of buyers that purchased this item
 
     def addPurchase(self, userId):
+        # Check that it matches userId formatting
         if not re.fullmatch(r'[\w]+', userId):
             raise Exception('Name Formatting')
         self.buyers.append(userId)
@@ -107,6 +108,9 @@ class ShoppingItem():
         # userId:  user ID of buyer that purchased the item
 
     def addReview(self, review):
+        # Check if it's a buyreview object
+        if not isinstance(review, BuyerReview):
+            raise Exception('Can only append buyer review objects')
         self.reviews.append(review)
         # add a review of this item
         # arguments:
@@ -119,14 +123,29 @@ class ShoppingItem():
         self.price = price
 
 
-# class ShopperAccount():
+class ShopperAccount():
     # Initializer/Constructor
-    # def __init__(self, userId, orderHistory):
-    #     pass
+    def __init__(self, userId, orderHistory):
+        # If not a alpanumeric with underscores
+        if not re.fullmatch(r'[\w]+', userId):
+            raise Exception('userId (userId can be alphanumeric and underscores')
+        self.userId = userId
+        
+        try:
+            [isinstance(order, ShoppingItem) for order in orderHistory]
+        except:
+            "Orders must be ShoppingItems"
+        self.orderHistory = orderHistory
 
-#     # Accessors for Class Vars
-#     def getPrice(self):
-#         return self.price
+    # Accessors for Class Vars
+    def getUserId(self):
+        pass
+
+    def getOrderHistory(self):
+        pass
+
+    def addPurchase(self):
+        pass
 
 
 def main():

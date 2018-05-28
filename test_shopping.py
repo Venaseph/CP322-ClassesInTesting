@@ -87,7 +87,7 @@ class TestShoppingItem(unittest.TestCase):
         with self.assertRaises(Exception):
             shoppingItem = shopping.ShoppingItem('name', 5.00, 1.5, [], [], [])
 
-    # def test_GetAverageRating(self):
+    # def test_Gets(self):
     #     reviews = [shopping.BuyerReview(1, 'This Sucks', 'chris'),
     #                shopping.BuyerReview(2, 'This Sucks', 'Brent'),
     #                shopping.BuyerReview(3, 'This Sucks', 'Aaron'),]
@@ -111,6 +111,7 @@ class TestShoppingItem(unittest.TestCase):
         # # Make sure objects match
         # for buyer in buyers:
         #     self.assertTrue(buyer in shoppingItem.getBuyers())  
+
     def test_AddPurchase(self):
         reviews = [shopping.BuyerReview(1, 'This sucks-?', 'chris'),
         shopping.BuyerReview(2, 'This is Great.', 'brent_test'),
@@ -129,6 +130,47 @@ class TestShoppingItem(unittest.TestCase):
             testPurchase = shoppingItem.addPurchase(-5)
         with self.assertRaises(Exception):
             testPurchase = shoppingItem.addPurchase('??!_SDJM||')
+
+    def test_AddReview(self):
+        reviews = [shopping.BuyerReview(1, 'This sucks-?', 'chris'),
+        shopping.BuyerReview(2, 'This is Great.', 'brent_test'),
+        shopping.BuyerReview(3, 'This is Great.', 'brent_test')]
+        tags = ['computer', 'laptop', 'mac']
+        buyers = ['chris', 'brent', 'aaron']
+        shoppingItem = shopping.ShoppingItem('name', 5.99, 1, reviews, tags, buyers)
+
+        addSample = shopping.BuyerReview(4, 'This is a new review', 'Mark')
+        shoppingItem.addReview(addSample)
+        self.assertEqual(shoppingItem.getReviews()[-1], addSample)
+
+        with self.assertRaises(Exception):
+            testReview = shoppingItem.addReview('great review')
+        with self.assertRaises(Exception):
+            testReview = shoppingItem.addReview(25)
+        with self.assertRaises(Exception):
+            testReview = shoppingItem.addReview(shoppingItem)
+
+    def test_SetPrice(self):
+        reviews = [shopping.BuyerReview(1, 'This sucks-?', 'chris'),
+        shopping.BuyerReview(2, 'This is Great.', 'brent_test'),
+        shopping.BuyerReview(3, 'This is Great.', 'brent_test')]
+        tags = ['computer', 'laptop', 'mac']
+        buyers = ['chris', 'brent', 'aaron']
+        shoppingItem = shopping.ShoppingItem('name', 5.99, 1, reviews, tags, buyers)
+
+        shoppingItem.setPrice(1.99)
+        self.assertEqual(shoppingItem.getPrice(), 1.99)
+
+        with self.assertRaises(Exception):
+            testPrice = shoppingItem.setPrice("this one")
+        with self.assertRaises(Exception):
+            testPrice = shoppingItem.setPrice(-1000.00)
+        with self.assertRaises(Exception):
+            testPrice = shoppingItem.setPrice("this one")
+        
+class TestShopperAccount(unittest.TestCase):
+    # Test initializon and positive result testing
+    def test_ShoppingItemInit(self):
 
 
 unittest.main()
