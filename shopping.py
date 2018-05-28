@@ -8,7 +8,7 @@ class BuyerReview():
     # Initializer/Constructor
     def __init__(self, rating, review, userId):
         # If not a int from 1-5
-        if rating < 1 or rating > 5:
+        if rating < 1 or rating > 5 or not isinstance(rating, int):
             raise Exception('Rating must be an int(1-5)')
         self.rating = rating
         # If not a normal sentance with punct/dash
@@ -51,6 +51,7 @@ class ShoppingItem():
         self.reviews = reviews
         self.tags = tags
         self.buyers = buyers
+
 
     # Accessors for Class Vars
     def getName(self):
@@ -96,31 +97,32 @@ class ShoppingItem():
         # arguments:  none
         # returns:  list of user ID's of buyers that purchased this item
 
-#     def addPurchase(self):
-#         pass
-#         # add a purchase of this item from a buyer
-#         # arguments: 
-#         # userId:  user ID of buyer that purchased the item
+    def addPurchase(self, userId):
+        if not re.fullmatch(r'[\w]+', userId):
+            raise Exception('Name Formatting')
+        self.buyers.append(userId)
+        self.sold += 1
+        # add a purchase of this item from a buyer
+        # arguments:
+        # userId:  user ID of buyer that purchased the item
 
-#     def addReview(self):
-#         pass
-#         # add a review of this item
-#         # arguments:
-#         # review:  a BuyerReview object 
-#         # returns:  N/A
+    def addReview(self, review):
+        self.reviews.append(review)
+        # add a review of this item
+        # arguments:
+        # review:  a BuyerReview object
+        # returns:  N/A
 
-#     def setPrice(self):
-#         pass
+    def setPrice(self, price):
+        if not re.fullmatch(r'^[+]?[\d]{1,3}(?:,?[\d]{3})*(?:.[\d]{2})?$', str('%.2f' % price)):
+            raise Exception('Price match a valid USD currency')
+        self.price = price
 
 
 # class ShopperAccount():
-#     # Class Variables
-#     userId = None
-#     orderHistory = None
-#     addPurchase = None
-#     # Initializer/Constructor
-#     def __init__(self, ):
-#         pass
+    # Initializer/Constructor
+    # def __init__(self, userId, orderHistory):
+    #     pass
 
 #     # Accessors for Class Vars
 #     def getPrice(self):

@@ -54,33 +54,20 @@ class TestShoppingItem(unittest.TestCase):
     # Test initializon and positive result testing
     def test_ShoppingItemInit(self):
         reviews = [shopping.BuyerReview(1, 'This sucks-?', 'chris'),
-                   shopping.BuyerReview(4, 'This is Great.', 'brent_test')]
+                   shopping.BuyerReview(2, 'This is Great.', 'brent_test'),
+                   shopping.BuyerReview(3, 'This is Great.', 'brent_test')]
         tags = ['computer', 'laptop', 'mac']
         buyers = ['chris', 'brent', 'aaron']
         shoppingItem = shopping.ShoppingItem('name', 5.99, 1, reviews, tags, buyers)
-        
+
         # AssertEqual checks two values, if not flags it as failing. Get Testing.
         self.assertEqual(shoppingItem.getName(), 'name')
         self.assertEqual(shoppingItem.getPrice(), 5.99)
         self.assertEqual(shoppingItem.getNumberSold(), 1)
-
-        # Check len of lists for match
-        self.assertEqual(len(reviews), len(shoppingItem.getReviews()))
-        # Make sure objects match
-        for review in reviews:
-            self.assertTrue(review in shoppingItem.getReviews())
-        
-        # Check len of lists for match
-        self.assertEqual(len(tags), len(shoppingItem.getTags()))
-        # Make sure objects match
-        for tag in tags:
-            self.assertTrue(tag in shoppingItem.getTags())
-
-        self.assertEqual(len(buyers), len(shoppingItem.getBuyers()))
-        # Make sure objects match
-        for buyer in buyers:
-            self.assertTrue(buyer in shoppingItem.getBuyers())     
-
+        self.assertEqual(shoppingItem.getAverageRating(), 2)
+        self.assertEqual(shoppingItem.getReviews(), reviews)
+        self.assertEqual(shoppingItem.getTags(), tags)
+        self.assertEqual(shoppingItem.getBuyers(), buyers)   
     
     def test_GetPrice(self):
         with self.assertRaises(Exception):
@@ -100,13 +87,48 @@ class TestShoppingItem(unittest.TestCase):
         with self.assertRaises(Exception):
             shoppingItem = shopping.ShoppingItem('name', 5.00, 1.5, [], [], [])
 
-    def test_GetAverageRating(self):
-        reviews = [shopping.BuyerReview(1, 'This Sucks', 'chris'),
-                   shopping.BuyerReview(2, 'This Sucks', 'Brent'),
-                   shopping.BuyerReview(3, 'This Sucks', 'Aaron'),]
+    # def test_GetAverageRating(self):
+    #     reviews = [shopping.BuyerReview(1, 'This Sucks', 'chris'),
+    #                shopping.BuyerReview(2, 'This Sucks', 'Brent'),
+    #                shopping.BuyerReview(3, 'This Sucks', 'Aaron'),]
 
-        item = shopping.ShoppingItem('name', 1.00, 0, reviews, [], [])
-        self.assertEqual(item.getAverageRating(), 2)
+    #     item = shopping.ShoppingItem('name', 1.00, 0, reviews, [], [])
+    #     self.assertEqual(item.getAverageRating(), 2)
+
+        # # Check len of lists for match
+        # self.assertEqual(len(reviews), len(shoppingItem.getReviews()))
+        # # Make sure objects match
+        # for review in reviews:
+        #     self.assertTrue(review in shoppingItem.getReviews())
+        
+        # # Check len of lists for match
+        # self.assertEqual(len(tags), len(shoppingItem.getTags()))
+        # # Make sure objects match
+        # for tag in tags:
+        #     self.assertTrue(tag in shoppingItem.getTags())
+
+        # self.assertEqual(len(buyers), len(shoppingItem.getBuyers()))
+        # # Make sure objects match
+        # for buyer in buyers:
+        #     self.assertTrue(buyer in shoppingItem.getBuyers())  
+    def test_AddPurchase(self):
+        reviews = [shopping.BuyerReview(1, 'This sucks-?', 'chris'),
+        shopping.BuyerReview(2, 'This is Great.', 'brent_test'),
+        shopping.BuyerReview(3, 'This is Great.', 'brent_test')]
+        tags = ['computer', 'laptop', 'mac']
+        buyers = ['chris', 'brent', 'aaron']
+        shoppingItem = shopping.ShoppingItem('name', 5.99, 1, reviews, tags, buyers)
+
+        shoppingItem.addPurchase('Chris')
+        self.assertEqual(shoppingItem.getBuyers()[-1], 'Chris')
+        self.assertEqual(shoppingItem.getNumberSold(), 2)
+
+        with self.assertRaises(Exception):
+            testPurchase = shoppingItem.addPurchase(25)
+        with self.assertRaises(Exception):
+            testPurchase = shoppingItem.addPurchase(-5)
+        with self.assertRaises(Exception):
+            testPurchase = shoppingItem.addPurchase('??!_SDJM||')
 
 
 unittest.main()
