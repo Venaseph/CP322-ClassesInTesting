@@ -169,8 +169,36 @@ class TestShoppingItem(unittest.TestCase):
             testPrice = shoppingItem.setPrice("this one")
         
 class TestShopperAccount(unittest.TestCase):
-    # Test initializon and positive result testing
-    def test_ShoppingItemInit(self):
+    # Test initializon and positive result testing, gave up copy and past for self.asserts
+    def test_ShopperAccountInit(self):
+        reviews = [shopping.BuyerReview(1, 'This sucks-?', 'chris'),
+                   shopping.BuyerReview(2, 'This is Great.', 'brent_test'),
+                   shopping.BuyerReview(3, 'This is Great.', 'brent_test')]
+        tags = ['computer', 'laptop', 'mac']
+        buyers = ['chris', 'brent', 'aaron']
+        sampleHistory = [shopping.ShoppingItem('name', 4.99, 5, reviews, tags, buyers,), shopping.ShoppingItem('name', 5.99, 1, reviews, tags, buyers,), shopping.ShoppingItem('name', 5.99, 1, reviews, tags, buyers,)]
+        shopperAccount = shopping.ShopperAccount('Chris', sampleHistory)
+
+        self.assertEqual(shopperAccount.getUserId(), 'Chris')
+        self.assertEqual(shopperAccount.getOrderHistory(), sampleHistory)
+
+    def test_GetUserId(self):
+        reviews = [shopping.BuyerReview(1, 'This sucks-?', 'chris'),
+                   shopping.BuyerReview(2, 'This is Great.', 'brent_test'),
+                   shopping.BuyerReview(3, 'This is Great.', 'brent_test')]
+        tags = ['computer', 'laptop', 'mac']
+        buyers = ['chris', 'brent', 'aaron']
+        sampleHistory = [shopping.ShoppingItem('name', 4.99, 5, reviews, tags, buyers,), shopping.ShoppingItem('name', 5.99, 1, reviews, tags, buyers,), shopping.ShoppingItem('name', 5.99, 1, reviews, tags, buyers,)]
+        shopperAccount = shopping.ShopperAccount('Chris', sampleHistory)
+       
+        with self.assertRaises(Exception):
+            shopperAccount = shopping.ShopperAccount(35, sampleHistory)
+        with self.assertRaises(Exception):
+            shopperAccount = shopping.ShopperAccount('ggh32[]', sampleHistory)
+        with self.assertRaises(Exception):
+            shopperAccount = shopping.ShopperAccount('Chr', ['this', 'that'])            
+        
+    
 
 
 unittest.main()

@@ -131,18 +131,22 @@ class ShopperAccount():
             raise Exception('userId (userId can be alphanumeric and underscores')
         self.userId = userId
         
-        try:
-            [isinstance(order, ShoppingItem) for order in orderHistory]
-        except:
-            "Orders must be ShoppingItems"
+        # try:
+        #     [isinstance(order, ShoppingItem) for order in orderHistory]
+        # except:
+        #     "Orders must be ShoppingItems"
+
+        for order in orderHistory:
+            if not isinstance(order, ShoppingItem):
+                raise Exception('IOrders must be ShoppingItems')
         self.orderHistory = orderHistory
 
     # Accessors for Class Vars
     def getUserId(self):
-        pass
+        return self.userId
 
     def getOrderHistory(self):
-        pass
+        return self.orderHistory
 
     def addPurchase(self):
         pass
