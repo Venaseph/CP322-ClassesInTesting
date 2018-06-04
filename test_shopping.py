@@ -3,6 +3,10 @@ import sys
 import unittest # Lib for Python UT
 import shopping # Make sure to import .py you're testing on 
 
+
+
+
+
 #subclasses of test case call methods of that function for testing
 class TestBuyerReview(unittest.TestCase):
     # Test initializon and positive result testing
@@ -198,6 +202,19 @@ class TestShopperAccount(unittest.TestCase):
         with self.assertRaises(Exception):
             shopperAccount = shopping.ShopperAccount('Chr', ['this', 'that'])            
         
+    def test_GetOrderHistory(self):
+        reviews = [shopping.BuyerReview(1, 'This sucks-?', 'chris'),
+                   shopping.BuyerReview(2, 'This is Great.', 'brent_test'),
+                   shopping.BuyerReview(3, 'This is Great.', 'brent_test')]
+        tags = ['computer', 'laptop', 'mac']
+        buyers = ['chris', 'brent', 'aaron']
+        sampleHistory = [shopping.ShoppingItem('name', 4.99, 5, reviews, tags, buyers,), shopping.ShoppingItem('name', 5.99, 1, reviews, tags, buyers,), shopping.ShoppingItem('name', 5.99, 1, reviews, tags, buyers,)]
+
+
+        # with self.assertRaises(Exception):
+        #     shopperAccount = shopping.ShopperAccount('Chris', sampleHistory)
+        
+
     
 
 

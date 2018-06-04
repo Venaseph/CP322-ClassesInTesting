@@ -2,6 +2,30 @@
 import sys
 import re
 import decimal
+import sqlite3
+import os
+
+class ShoppingFactory():
+    def __init__(self, dbpath):
+        # If not ints
+        if not os.path.exists(dbpath):
+            raise Exception("Bad DB path")
+
+        self.dbconn = sqlite3.connect(dbpath)
+        self.pageSize = 25
+        self.cursor = self.dbconn.cursor()
+        self.cursor.execute('SELECT * FROM items')
+
+    def setPageSize(self, size):
+        if size <= 0 or size > 100:
+            raise Exception("Invalid Page Size")
+        self.pageSize = size
+
+    def getPageSize(self):
+        return self.pageSize
+
+    def getNextPage(self):
+        return self.cursor.fetchmany(self.pageSize)
 
 
 class BuyerReview():
@@ -148,12 +172,16 @@ class ShopperAccount():
     def getOrderHistory(self):
         return self.orderHistory
 
-    def addPurchase(self):
-        pass
+    def addPurchase(self, purchase):
+        if not isinstance(purchase, ShoppingItem):
+            raise Exception('Orders must be ShoppingItems')
+        self.orderHistory.append(purchase)
+        
 
 
 def main():
     return 0
+
 
 if __name__ == "__main__":
     sys.exit(main())
