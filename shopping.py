@@ -13,6 +13,7 @@ class ShoppingFactory():
 
         self.dbconn = sqlite3.connect(dbpath)
         self.pageSize = 25
+        #make cursor
         self.cursor = self.dbconn.cursor()
         self.cursor.execute('SELECT * FROM items')
 
@@ -21,11 +22,54 @@ class ShoppingFactory():
             raise Exception("Invalid Page Size")
         self.pageSize = size
 
+
     def getPageSize(self):
         return self.pageSize
 
+
     def getNextPage(self):
-        return self.cursor.fetchmany(self.pageSize)
+        # Cursor set in init to retain position
+        # Fetch many returns a list of tuples
+        data = self.cursor.fetchmany(self.pageSize)
+        items = []
+        for d in data:
+            tags = str(d[4]).split(',')
+            reviews = self.constructReviews(d[0])
+            items.append(ShoppingItem(d[1], d[2], d[3], reviews, tags, []))
+
+        return items
+
+
+    def constructReviews(self, itemId):
+        # make new cursor just for reviews
+        rc = self.dbconn.cursor()
+        rc.execute('SELECT * FROM reviews WHERE item_id is %d' % itemId)
+        data = rc.fetchall()
+        print(data)
+        reviews = []
+        for d in data:
+            reviews.append(BuyerReview(d[1], str(d[2]), str(d[3])))
+        return reviews
+
+
+    def sortMostSold(self):
+        self.cursor.execute('SELECT * FROM items ORDER BY sold DESC')
+
+
+    def sortLowestPrice(self):
+        self.cursor.execute('SELECT * FROM items ORDER BY price')
+
+
+    def setSearchFilter(self, tags):
+        query = 'SELECT * FROM items WHERE'
+        addtoQuery = ''     
+        for tag in tags:
+            if addtoQuery:
+                addtoQuery += ' OR'
+            addtoQuery += ' tags LIKE "%' + tag + '%"'
+        # executre query    
+        query += addtoQuery
+        self.cursor.execute(query)
 
 
 class BuyerReview():
